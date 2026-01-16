@@ -1,0 +1,105 @@
+
+devices:
+  asus_rt-ac51u:
+    name: ASUS RT-AC51U
+    target: ramips-mt7620
+    tests: 1
+
+  dlink_dir-842-c3:
+    name: D-Link DIR-842 C3
+    target: ath79-generic
+
+  dlink_dsl-2750b-b1:
+    name: D-Link DSL-2750B B1 (EU)
+    target: bmips-bcm6328
+    tests: 1
+
+  cudy_wr3000s_v1:
+    name: Cudy WR3000S v1
+    target: mediatek-filogic
+    tests: 1
+
+  gemtek_wvrtm-127acn:
+    name: Gemtek WVRTM-127ACN
+    target: ramips-mt7621
+
+  gemtek_wvrtm-130acn:
+    name: Gemtek WVRTM-130ACN
+    target: ramips-mt7621
+
+  meraki_mr18:
+    name: Meraki MR18
+    target: ath79-nand
+    tests: 2
+
+  mikrotik_routerboard-lhg-5nd:
+    name: MikroTik RBLHG-5nD (LHG 5)
+    target: ath79-mikrotik
+    tests: 1
+
+  mikrotik_sxtsq-5-ac:
+    name: MikroTik RBSXTsqG-5acD (SXTsq 5 ac)
+    target: ipq40xx-mikrotik
+    tests: 1
+
+  netgear_dgn3500:
+    name: NETGEAR DGN3500
+    target: lantiq-xway
+    tests: 1
+
+  openwrt_one:
+    name: OpenWrt One
+    target: mediatek-filogic
+    tests: 1
+
+  tplink_archer-d50-v1:
+    name: TP-Link Archer D50 v1
+    target: ath79-generic
+
+  tplink_cpe510-v1:
+    name: TP-Link CPE510 v1
+    target: ath79-generic
+    tests: 3
+
+  tplink_cpe510-v3:
+    name: TP-Link CPE510 v3
+    target: ath79-generic
+    tests: 2
+
+  tplink_mr600-v2-eu:
+    name: TP-Link Archer MR600 v2 (EU)
+    target: ramips-mt7621
+    tests: 1
+  
+  tp-link_td-w8968-v3:
+    name: TP-Link TD-W8960N v5
+    target: bmips-bcm6318
+    tests: 1
+
+  tplink_tl-mr6400-v4:
+    name: TP-Link TL-MR6400 v4
+    target: ramips-mt76x8
+
+  ubnt_litebeam-m5-xw:
+    name: Ubiquiti LiteBeam M5
+    target: ath79-generic
+    tests: 6
+
+  ubnt_nanostation-loco-m-xw:
+    name: Ubiquiti AirGrid M5 HP XW
+    target: ath79-generic
+    tests: 19
+
+  ubnt_nanostation-loco-m-xw_alt0:
+    name: Ubiquiti NanoStation Loco M5 XW
+    target: ath79-generic
+    tests: 1
+
+  ubnt_nanostation-loco-m-xw_alt1:
+    name: Ubiquiti PowerBeam M5-300 XW
+    target: ath79-generic
+    tests: 3
+
+  ubnt_nanostation-m-xw:
+    name: Ubiquiti NanoStation M5 XW
+    target: ath79-generic

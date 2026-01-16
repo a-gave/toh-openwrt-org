@@ -1359,6 +1359,38 @@ $(document).ready(function () {
 	$('#toh-load-text').html('Fetching TOH devices...');
 	FetchReleases().then(() => {
 		$.getJSON( toh_urls.toh_json, function( data ){ 
+
+			devicesLime && orgs.forEach(org => {
+				let devices = Object.entries(devicesLime[org]["devices"])
+				console.log(org + ' devices: '+devices.length)
+			})
+
+			data.entries.forEach((v) => {
+		
+				// 5 brand, 37 model, 63 HW
+				let fullname = v[5]+' '+v[37]+(v[63] && ' '+v[63] || '')
+
+				devicesLime && orgs.forEach(org => {
+					let devices = Object.entries(devicesLime[org]["devices"])
+					devices.forEach((d) => {
+						if (d[1].name == fullname) {
+							if (v[74]) { v[74] = v[74]+", "+org } 
+							else { v[74] = org }
+							v.push(d[1].tests)
+						}
+					})
+				})
+
+			})
+
+			// console.log(data.entries)
+			data.columns.push('organizations')
+
+			orgs.forEach(org => {
+				let s_org = org.replace(".","_")
+				data.columns.push('org_'+s_org+'_qty_available')
+			})
+
 			//Makes columns
 			var columns = data.columns.map((value, index) => ({
 				field: value,
@@ -1370,6 +1402,7 @@ $(document).ready(function () {
 			// add vitual (not linked to existing fields) columns 
 			var virtualColumns = getVirtualColumns();
 			columns=[...columns, ...virtualColumns];
+			// console.log(columns)
 
 			//init table with data
 			showLoading();

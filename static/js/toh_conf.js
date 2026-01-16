@@ -17,11 +17,34 @@ const toh_app={
 var toh_debug_level=1; 
 
 
+// TODO fetch remote csv (etherpad) or yaml
+
+const orgs = [
+	"antennine.org"
+]
+
+let devicesLime = []
+
+orgs.forEach(org => {
+	async function fetchJSON(url) {
+		return fetch(url)
+				.then(response => response.json())
+				.catch((error) => {
+						console.log(error);
+				});
+	}
+	(async () => {
+		let jsonFile = await fetchJSON('./orgs/'+org+'/devices.json');
+		devicesLime[org] = jsonFile
+	})();
+
+});
+
 // Urls --------------------------------------------------------
 const toh_urls={
 	www: 			"https://openwrt.org/",
 	hwdata: 		"https://openwrt.org/toh/hwdata/",
-	firm_select: 	"https://firmware-selector.openwrt.org/",
+	firm_select: 	"https://firmware-selector.libremesh.org",
 	firm_versions: 	"https://downloads.openwrt.org/.versions.json",
 	firm_releases: 	"https://downloads.openwrt.org/releases/VERSION/.overview.json",
 	toh_json:		"https://openwrt.org/toh.json",
@@ -184,6 +207,22 @@ let toh_colStyles = {
     VIRT_hwdata:						{title: "HwData",		headerTooltip: 'Hardware Data Page',			width: 35,	hozAlign: 'center',	sorter: 'string',	frozen: false,	formatter: _formatLink,			formatterParams: {icon: 'fa-solid fa-database', ttip:'Hardware Data Page'}, 		headerFilter: false, tooltip: false},
     VIRT_edit:							{title: "Edit",			headerTooltip: 'Edit HwData Page',				width: 10,	hozAlign: 'center',	sorter: undefined,	frozen: true,	formatter: _formatEditHwData,	formatterParams: undefined,		tooltip: false, headerFilter: false, headerSort: false, download: false}, 
 };
+
+toh_colStyles["organizations"] = {
+	title: "Organizations",		
+	headerTooltip: 'Organizations', 
+	width: 200,	hozAlign: 'left',	sorter: undefined, frozen: false, formatter: undefined, formatterParams: undefined
+}
+orgs.forEach(org => {
+	let s_org = org.replace(".","_")
+	availability = String('Org: '+org+' availablity')
+
+	toh_colStyles['org_'+s_org+'_qty_available'] = {
+		title: availability,
+		headerTooltip: availability,
+		width: 120,	hozAlign: 'left',	sorter: undefined, frozen: false,	formatter: undefined,	formatterParams: undefined, ...colFilterMin
+	}
+});
 
 
 
@@ -359,6 +398,8 @@ let toh_colPresets={
 		'firmwareopenwrtupgradeurl',
 		...toh_colGroups.links.fields,
 		'picture',
+		'organizations',
+		'org_antennine_org_qty_available'
 	],
 	mini:	[
 		...toh_colGroups.base.fields,
@@ -378,33 +419,39 @@ let toh_colPresets={
 		'wikideviurl',
 		'owrt_forum_topic_url',
 		'availability',
-		'picture'
+		'picture',
+		'organizations'
 		],
 	hardware:	[
 		...toh_colGroups.base.fields,
 		...toh_colGroups.hardware_main.fields,
 		...toh_colGroups.ports.fields,
 		...toh_colGroups.features.fields,
+		'organizations'
 	],
 	network:	[
 		...toh_colGroups.base.fields,
 		...toh_colGroups.ethernet.fields,
 		...toh_colGroups.network.fields,
 		...toh_colGroups.wifi.fields,
+		'organizations'
 	],
 	links:	[
 		...toh_colGroups.base.fields,
 		...toh_colGroups.links.fields,
 		...toh_colGroups.downloads.fields,
+		'organizations'
 	],
 	software:	[
 		...toh_colGroups.base.fields,
 		...toh_colGroups.openwrt.fields,
 		...toh_colGroups.software.fields,
+		'organizations'
 	],
 	misc:	[
 		...toh_colGroups.base.fields,
 		...toh_colGroups.misc.fields,
+		'organizations'
 	],
 };
 
@@ -1081,6 +1128,15 @@ let toh_filterPresets={
 			'memory_more',
 			'wifi_ax',
 			'eth_1g',
+		]
+	},
+
+	antennine:{
+		title:		"Antennine.org",
+		description: "Used in the antennine.org network",
+		type:		"normal",
+		filters:[
+			{field:	"organizations", 	type:"like",	value:'antennine.org'},
 		]
 	},
 
